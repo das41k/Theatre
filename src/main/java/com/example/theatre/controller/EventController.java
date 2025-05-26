@@ -2,8 +2,10 @@ package com.example.theatre.controller;
 
 import com.example.theatre.entity.Event;
 import com.example.theatre.entity.EventType;
+import com.example.theatre.entity.Place;
 import com.example.theatre.service.EventService;
 import com.example.theatre.service.HallService;
+import com.example.theatre.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.xml.stream.EventFilter;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/events")
@@ -26,6 +27,9 @@ public class EventController {
 
     @Autowired
     private HallService hallService;
+
+    @Autowired
+    private PlaceService placeService;
 
     @GetMapping
     public String events(Model model) {
@@ -53,6 +57,19 @@ public class EventController {
                           @RequestParam(value = "eventTypeId", required = false) List<Integer> filtersByType,
                           @RequestParam(value = "hallId", required = false) List<Integer> filtersByHall,
                           @RequestParam(value = "dateFilter", required = false) List<String> dateFilter) {
+
+
+        if (filtersByType != null) {
+            model.addAttribute("selectedEventTypes", filtersByType);
+        }
+        if (filtersByHall != null) {
+            model.addAttribute("selectedHalls", filtersByHall);
+        }
+        if (dateFilter != null) {
+            model.addAttribute("selectedDates", dateFilter);
+        }
+        model.addAttribute("types", eventService.getAllTypes());
+        model.addAttribute("countHalls", hallService.getCountHalls());
 
         List<Event> events = null;
 
@@ -86,6 +103,22 @@ public class EventController {
         }
 
         return "events";
+    }
+
+    @GetMapping("/{id}/page")
+    public String eventPage(@PathVariable Long id, Model model) {
+        Event event = eventService.findById(id);
+
+        List<Place> places = event.getPlaces();
+        places.sort(Comparator.comparingInt(Place::getRow).thenComparingInt(Place::getNumber));
+
+        Long countRows = placeService.getCountRows(event.getHall());
+
+        model.addAttribute("event",event);
+        model.addAttribute("hall", event.getHall());
+        model.addAttribute("rows", countRows);
+        model.addAttribute("places", places);
+        return "event-page";
     }
 
 }

@@ -30,7 +30,11 @@
                 <h4>Тип мероприятия</h4>
                 <div class="filter-options">
                     <c:forEach var="eventType" items="${types}">
-                        <label><input type="checkbox" name="eventTypeId" value="${eventType.id}"> ${eventType.name}</label>
+                        <label>
+                            <input type="checkbox" name="eventTypeId" value="${eventType.id}"
+                                   <c:if test="${selectedEventTypes != null && selectedEventTypes.contains(eventType.id)}">checked</c:if>>
+                                ${eventType.name}
+                        </label>
                     </c:forEach>
                 </div>
             </div>
@@ -39,10 +43,14 @@
             <div class="filter-group">
                 <h4>Дата</h4>
                 <div class="filter-options">
-                    <label><input type="checkbox" name="dateFilter" value="today"> Сегодня</label>
-                    <label><input type="checkbox" name="dateFilter" value="tomorrow"> Завтра</label>
-                    <label><input type="checkbox" name="dateFilter" value="week"> На этой неделе</label>
-                    <label><input type="checkbox" name="dateFilter" value="month"> В этом месяце</label>
+                    <label><input type="checkbox" name="dateFilter" value="today"
+                                  <c:if test="${selectedDates != null && selectedDates.contains('today')}">checked</c:if>> Сегодня</label>
+                    <label><input type="checkbox" name="dateFilter" value="tomorrow"
+                                  <c:if test="${selectedDates != null && selectedDates.contains('tomorrow')}">checked</c:if>> Завтра</label>
+                    <label><input type="checkbox" name="dateFilter" value="week"
+                                  <c:if test="${selectedDates != null && selectedDates.contains('week')}">checked</c:if>> На этой неделе</label>
+                    <label><input type="checkbox" name="dateFilter" value="month"
+                                  <c:if test="${selectedDates != null && selectedDates.contains('month')}">checked</c:if>> В этом месяце</label>
                 </div>
             </div>
 
@@ -50,7 +58,11 @@
                 <h4>Зал</h4>
                 <div class="filter-options">
                     <c:forEach var="var" begin="1" end="${countHalls}">
-                        <label><input type="checkbox" name="hallId" value="${var}"> Зал ${var} </label>
+                        <label>
+                            <input type="checkbox" name="hallId" value="${var}"
+                                   <c:if test="${selectedHalls != null && selectedHalls.contains(var)}">checked</c:if>>
+                            Зал ${var}
+                        </label>
                     </c:forEach>
                 </div>
             </div>

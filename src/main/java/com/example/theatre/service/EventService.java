@@ -2,6 +2,7 @@ package com.example.theatre.service;
 
 import com.example.theatre.entity.Event;
 import com.example.theatre.entity.EventType;
+import com.example.theatre.entity.Hall;
 
 import java.util.List;
 

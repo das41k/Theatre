@@ -3,6 +3,7 @@ package com.example.theatre.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Event")
@@ -30,6 +31,21 @@ public class Event {
     @Column(columnDefinition = "MEDIUMBLOB", name = "intro")
     private byte[] imageData;
 
+    @ManyToMany
+    @JoinTable(
+            name = "event_place",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name ="place_id")
+    )
+    private List<Place> places;
+
+    public List<Place> getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(List<Place> places) {
+        this.places = places;
+    }
 
     public int getId() {
         return id;
