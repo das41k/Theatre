@@ -10,9 +10,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Theatre</title>
+    <title>Theatre | ADMIN</title>
 </head>
 <body>
-ADMIN
+<a href="${pageContext.request.contextPath}/events/admin/">  </a>
 </body>
 </html>

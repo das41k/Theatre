@@ -84,6 +84,11 @@
                 </div>
             </c:forEach>
         </div>
+        <div id="placeActions" class="place-actions" style="display: none; justify-content: center; gap: 10px; margin-top: 20px;">
+            <button class="action-btn" style="background: linear-gradient(135deg, #4285f4, #34a853); color: white; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0, 0, 0, 0.1)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">Купить билет</button>
+            <button class="action-btn" style="background: linear-gradient(135deg, #4285f4, #34a853); color: white; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(0, 0, 0, 0.1)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">Посмотреть вид с места</button>
+        </div>
+
         <div class="legend">
             <div class="legend-item">
                 <div class="legend-circle available"></div>
@@ -92,6 +97,10 @@
             <div class="legend-item">
                 <div class="legend-circle occupied"></div>
                 <span>Занято</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-circle selected"></div>
+                <span>Выбрано</span>
             </div>
         </div>
     </div>
@@ -115,6 +124,30 @@
             closeModal();
         }
     }
+    let selectedPlace = null;
+
+    function selectPlace(element) {
+        // Если место уже выбрано, сбросить выбор
+        if (selectedPlace) {
+            selectedPlace.classList.remove('selected');
+        }
+
+        // Выбрать новое место
+        if (element !== selectedPlace) {
+            element.classList.add('selected');
+            selectedPlace = element;
+            document.getElementById('placeActions').style.display = 'flex';
+        } else {
+            selectedPlace = null;
+            document.getElementById('placeActions').style.display = 'none';
+        }
+    }
+    // Добавляем обработчик событий для мест
+    document.querySelectorAll('.place-container.available').forEach(place => {
+        place.addEventListener('click', function() {
+            selectPlace(this);
+        });
+    });
 </script>
 </body>
 </html>
