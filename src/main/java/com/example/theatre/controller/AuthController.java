@@ -58,7 +58,7 @@ public class AuthController {
             Client clientDb = clientService.addClient(client);
             session.setAttribute("client", clientDb);
             model.addAttribute("client", clientDb);
-            return "events";
+            return "redirect:/events";
         } catch (DataIntegrityViolationException e) {
             handleDbUniqueErrors(e, bindingResult);
             return "register";

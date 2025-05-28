@@ -59,7 +59,7 @@ public class Client {
             message = "Номер должен начинаться с +7 или 8 и содержать 11 цифр")
     private String phone;
 
-    @Column(name = "password", nullable = false, unique = true)
+    @Column(name = "password", nullable = false)
     @Size(min = 8, message = "Пароль должен содержать минимум 8 символов")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[!@#$%^&*]).*$",
             message = "Пароль должен содержать минимум 1 заглавную букву и 1 спецсимвол")

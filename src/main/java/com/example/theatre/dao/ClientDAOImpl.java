@@ -3,6 +3,7 @@ package com.example.theatre.dao;
 import com.example.theatre.entity.Client;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
