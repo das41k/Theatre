@@ -14,8 +14,10 @@
 <header>
     <nav>
         <ul>
-            <li>Список мероприятий</li>
-            <li>Личный кабинет</li>
+            <li><a href="${pageContext.request.contextPath}/events"
+                   style="text-decoration: none; color: inherit; display: block;">Список мероприятий</a></li>
+            <li><a href="${pageContext.request.contextPath}/profile"
+                   style="text-decoration: none; color: inherit; display: block;">Личный кабинет</a></li>
         </ul>
     </nav>
 </header>

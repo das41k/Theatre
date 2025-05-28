@@ -17,9 +17,6 @@ public class Place {
     @Column(name = "row", nullable = false)
     private int row;
 
-    @Column(name = "status")
-    private boolean status;
-
     @Column(name = "place_view")
     private byte[] placeView;
 
@@ -51,9 +48,6 @@ public class Place {
         return placeView;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
 
     public Hall getHall() {
         return hall;
@@ -69,10 +63,6 @@ public class Place {
 
     public void setRow(int row) {
         this.row = row;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     public void setPlaceView(byte[] placeView) {

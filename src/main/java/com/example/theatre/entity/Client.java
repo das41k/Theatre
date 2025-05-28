@@ -69,6 +69,17 @@ public class Client {
     @JoinColumn(name = "role_id")
     Role role;
 
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    private List<Ticket> tickets;
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
     public int getId() {
         return id;
     }
@@ -152,5 +163,8 @@ public class Client {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+    public boolean isAdmin() {
+        return role != null && "ADMIN".equals(role.getName());
     }
 }

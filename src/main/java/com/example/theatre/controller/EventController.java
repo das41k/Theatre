@@ -109,15 +109,14 @@ public class EventController {
     public String eventPage(@PathVariable Long id, Model model) {
         Event event = eventService.findById(id);
 
-        List<Place> places = event.getPlaces();
-        places.sort(Comparator.comparingInt(Place::getRow).thenComparingInt(Place::getNumber));
+        List<Object[]> eventPlaces = placeService.getPlaceStatusesForEvent(id);
 
         Long countRows = placeService.getCountRows(event.getHall());
 
         model.addAttribute("event",event);
         model.addAttribute("hall", event.getHall());
         model.addAttribute("rows", countRows);
-        model.addAttribute("places", places);
+        model.addAttribute("places", eventPlaces);
         return "event-page";
     }
 

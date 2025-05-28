@@ -75,4 +75,10 @@ public class EventServiceImpl implements EventService {
         return eventDAO.getEventsByFiltersHallWithDates(halls, dateFilters);
     }
 
+    @Override
+    public List<Object[]> getPopularEvents() {
+        return eventDAO.getPopularEvents();
+    }
+
+
 }

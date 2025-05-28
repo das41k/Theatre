@@ -17,4 +17,6 @@ public interface EventService {
     List<Event> getEventsByFiltersWithDates(List<Integer> types, List<Integer> halls, List<String> dateFilters);
     List<Event> getEventsByFiltersTypeWithDates(List<Integer> types, List<String> dateFilters);
     List<Event> getEventsByFiltersHallWithDates(List<Integer> halls, List<String> dateFilters);
+
+    List<Object[]> getPopularEvents();
 }

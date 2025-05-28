@@ -2,6 +2,7 @@ package com.example.theatre.dao;
 
 import com.example.theatre.entity.Event;
 import com.example.theatre.entity.EventType;
+import com.example.theatre.entity.Hall;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -140,5 +142,23 @@ public class EventDAOImpl implements EventDAO {
         if (dateFilters.contains("month")) {
             query.setParameter("endOfMonth", today.plusMonths(1));
         }
+    }
+
+    @Override
+    public List<Object[]> getPopularEvents() {
+        String sql = "SELECT e, COUNT(t) FROM Ticket t JOIN t.event e " +
+                "GROUP BY e.id, e.hall, e.eventType, e.dateEvent, e.name " +
+                "ORDER BY COUNT(t) DESC";
+        Query query = em.createQuery(sql);
+        query.setMaxResults(10);
+        return query.getResultList();
+    }
+
+    @Override
+    public Arrays findByHall(Hall hall) {
+        String sql = "select e from Event e where e.hall = :hall";
+        Query query = em.createQuery(sql);
+        query.setParameter("hall", hall);
+        return (Arrays) query.getSingleResult();
     }
 }

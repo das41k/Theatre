@@ -2,7 +2,9 @@ package com.example.theatre.dao;
 
 import com.example.theatre.entity.Event;
 import com.example.theatre.entity.EventType;
+import com.example.theatre.entity.Hall;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface EventDAO {
@@ -17,4 +19,7 @@ public interface EventDAO {
     List<Event> getEventsByFiltersTypeWithDates(List<Integer> types, List<String> dateFilters);
     List<Event> getEventsByFiltersHallWithDates(List<Integer> halls, List<String> dateFilters);
 
+    List<Object[]> getPopularEvents();
+
+    Arrays findByHall(Hall hall);
 }

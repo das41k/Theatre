@@ -4,7 +4,7 @@ import com.example.theatre.entity.Client;
 import com.example.theatre.entity.Role;
 import com.example.theatre.service.ClientService;
 import com.example.theatre.service.RoleService;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class AuthController {
@@ -43,7 +44,7 @@ public class AuthController {
     }
 
     @RequestMapping("/register-client")
-    public String registerClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult, Model model) {
+    public String registerClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult, HttpSession session, Model model) {
         if (bindingResult.hasErrors()) {
             return "register";
         }
@@ -55,6 +56,7 @@ public class AuthController {
             Role role = roleService.findByRoleName("USER");
             client.setRole(role);
             Client clientDb = clientService.addClient(client);
+            session.setAttribute("client", clientDb);
             model.addAttribute("client", clientDb);
             return "events";
         } catch (DataIntegrityViolationException e) {
@@ -67,7 +69,8 @@ public class AuthController {
     public String loginClient(@Valid @ModelAttribute("client") Client client,
                               BindingResult bindingResult,
                               Model model,
-                              @RequestParam("loginByPhone") boolean loginByPhone) {
+                              @RequestParam("loginByPhone") boolean loginByPhone,
+                              HttpSession session) {
 
         if (loginByPhone) {
             if (bindingResult.hasFieldErrors("phone") || bindingResult.hasFieldErrors("password")) {
@@ -83,6 +86,7 @@ public class AuthController {
                 System.out.println("Неудачный вход");
                 return "login";
             }
+            session.setAttribute("client", clientCheck);
             model.addAttribute("client", clientCheck);
             if (clientCheck.getRole().getName().equals("USER")) {
                 return "redirect:/events";
@@ -101,6 +105,7 @@ public class AuthController {
                 return "login";
             }
 
+            session.setAttribute("client", clientCheck);
             model.addAttribute("client", clientCheck);
             if (clientCheck.getRole().getName().equals("USER")) {
                 return "redirect:/events";
