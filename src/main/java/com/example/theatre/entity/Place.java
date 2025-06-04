@@ -14,7 +14,7 @@ public class Place {
     @Column(name = "number", nullable = false)
     private int number;
 
-    @Column(name = "row", nullable = false)
+    @Column(name = "place_row", nullable = false)
     private int row;
 
     @Column(name = "place_view")

@@ -25,11 +25,11 @@ public class PlaceDAOImpl implements PlaceDAO {
 
     @Override
     public List<Object[]> getPlaceStatusesForEvent(Long eventId) {
-        String sql = "SELECT p.id, p.number, p.row, p.Hall_number, " +
+        String sql = "SELECT p.id, p.number, p.place_row, p.Hall_number, " +
                 "ep.place_status " +
                 "FROM Place p " +
                 "JOIN event_place ep ON p.id = ep.place_id AND ep.event_id = ?1 " +
-                "ORDER BY p.row, p.number";
+                "ORDER BY p.place_row, p.number";
 
         Query query = em.createNativeQuery(sql);
         query.setParameter(1, eventId);
